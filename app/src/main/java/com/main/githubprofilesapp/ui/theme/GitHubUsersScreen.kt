@@ -11,7 +11,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.main.githubprofilesapp.viewmodel.GitHubViewModel
 
 @Composable
-fun GitHubUsersScreen(viewModel: GitHubViewModel = viewModel()) {
+fun GitHubUsersScreen(
+    viewModel: GitHubViewModel = viewModel(),
+    onUserClick: (String) -> Unit
+) {
     val users by viewModel.users.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
 
@@ -27,7 +30,10 @@ fun GitHubUsersScreen(viewModel: GitHubViewModel = viewModel()) {
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             itemsIndexed(users) { index, user ->
-                GitHubUserItem(user)
+                GitHubUserItem(user = user, onUserClick = onUserClick)
+                if (index < users.lastIndex) {
+                    Divider()
+                }
                 if (index >= users.lastIndex - 5) {
                     viewModel.loadUsers()
                 }

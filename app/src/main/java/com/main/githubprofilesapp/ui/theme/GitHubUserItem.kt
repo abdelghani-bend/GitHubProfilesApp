@@ -1,6 +1,7 @@
 package com.main.githubprofilesapp.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -10,12 +11,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.main.githubprofilesapp.data.model.GitHubUser
+import androidx.compose.ui.Alignment
 
 @Composable
-fun GitHubUserItem(user: GitHubUser) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(8.dp)) {
+fun GitHubUserItem(
+    user: GitHubUser,
+    onUserClick: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onUserClick(user.login) }
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Image(
             painter = rememberAsyncImagePainter(user.avatar_url),
             contentDescription = "Avatar",
